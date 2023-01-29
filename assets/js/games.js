@@ -1,3 +1,23 @@
+var fightOrSkip = function () {
+  // ask the player if they'd like to fight or run
+  var promptFight = window.prompt(
+    "Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' OR 'SKIP' to choose."
+  );
+
+  // if player picks "skip" confirm and then stop the loop
+  if (promptFight === "skip" || promptFight === "SKIP") {
+    // confirm player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+  }
+
+  // if yes (true), then fight
+  if (confirmSkip) {
+    window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+    // subtract money from playerMoney for skipping
+    playerInfo.money = Math.max(0, playerInfo.money - 10);
+  }
+};
+
 // function to set name
 var getPlayerName = function () {
   var name = "";
@@ -5,6 +25,8 @@ var getPlayerName = function () {
   // loop
   while (name === "" || name === null) {
     name = prompt("What is your robot's name?");
+    window.alert("You need  to provide a valid answer! Please try again.");
+    return fightOrSkip();
   }
 
   console.log("Your robot's name is " + name);
@@ -57,27 +79,6 @@ var fight = function (pickedEnemyObj) {
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter fight(pickedEnemyName);
     } else {
       window.alert("You have lost your robot in battle Game Over!");
-      break;
-    }
-    // ask the player if they'd like to fight or run
-    var promptFight = window.prompt(
-      "Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' OR 'SKIP' to choose."
-    );
-
-    // if player picks "skip" confirm and then stop the loop
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      // confirm player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-    }
-
-    // if yes (true), then fight
-    if (confirmSkip) {
-      window.alert(
-        playerInfo.name + " has decided to skip this fight. Goodbye!"
-      );
-      // subtract money from playerMoney for skipping
-      playerInfo.money = Math.max(0, playerInfo.money - 10);
-      console.log("playerMoney", playerInfo.money);
       break;
     }
 
@@ -301,4 +302,8 @@ if (playAgainConfirm) {
   startGame();
 } else {
   window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+}
+
+while (playerInfo.health > 0 && enemy.health > 0) {
+  fightOrSkip();
 }
